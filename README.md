@@ -131,3 +131,10 @@ Si le serveur est sur le même sous-réseau `LAN`, il sera toujours accessible ;
 ## 4. Script de Synchronisation
 Le script serveur `check_deconnexions.php` compare périodiquement ce que possède le MikroTik (`/ip hotspot active`) avec la base de données.
 Vous pouvez configurer une Tâche Planifiée (Windows) ou un **CRON Job** (Linux/Unix) qui lance ce script toutes les X minutes pour maintenir des historiques fiables de `login_time` et `logout_time`.
+
+---
+
+## 5. Licence
+
+Ce projet est sous licence MIT. Voir le fichier [LICENSE](LICENSE) pour plus de détails.
+
