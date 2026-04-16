@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title id="title"></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <meta name="theme-color" content="#3B5998" />
+    <meta
+      name="viewport"
+      content="width=device-width; initial-scale=1.0; maximum-scale=1.0;"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <script language="JavaScript">
+      function openLogin() {
+        if (window.name != "hotspot_logout") return true;
+        open("$(link-login)", "_blank", "");
+        window.close();
+        return false;
+      }
+    </script>
+
+    <div class="container">
+      <div id="main" class="main">
+        <div class="box-main">
+          <div class="box-child">
+            <img src="./logoctn.ico" alt="" />
+            <h1 class="brand">[NOM_DE_VOTRE_RESEAU_WIFI]</h1>
+          </div>
+        </div>
+        <div class="box">
+          <div style="margin-top: 30px; text-align: center">
+            <i style="font-size: 50px" class="icon icon-user-circle-o"
+              >&#xf2be;</i
+            >
+            <h3 id="user">$(username)</h3>
+          </div>
+          <br />
+          <b style="margin-top: 20px">Vous etes deconnecte du hotspot !</b>
+          <br /><br />
+        </div>
+        <table class="table2">
+          <tr>
+            <td align="right">
+              Adresse IP <i class="icon icon-sitemap">&#xf0e8;</i>
+            </td>
+            <td>$(ip)</td>
+          </tr>
+          <tr>
+            <td align="right">
+              Adresse MAC <i class="icon icon-barcode">&#xe80a;</i>
+            </td>
+            <td>$(mac)</td>
+          </tr>
+          <tr>
+            <td align="right">
+              Connecte <i class="icon icon-exchange">&#xf0ec;</i>
+            </td>
+            <td>$(uptime)</td>
+          </tr>
+          <tr>
+            <td align="right">
+              Telechargement (Montant) <i class="icon icon-upload">&#xe808;</i>
+            </td>
+            <td>$(bytes-in-nice)</td>
+          </tr>
+          <tr>
+            <td align="right">
+              Telechargement (Descendant)
+              <i class="icon icon-download">&#xe809;</i>
+            </td>
+            <td>$(bytes-out-nice)</td>
+          </tr>
+          $(if remain-bytes-total)
+          <tr>
+            <td align="right">
+              Quota restant <i class="icon icon-hourglass-2">&#xf252;</i>
+            </td>
+            <td>$(remain-bytes-total-nice)</td>
+          </tr>
+          $(endif) $(if session-time-left)
+          <tr>
+            <td align="right">
+              Temps restant <i class="icon icon-clock">&#xe805;</i>
+            </td>
+            <td>$(session-time-left)</td>
+          </tr>
+          $(endif)
+        </table>
+        <br />
+        <form action="$(link-login)" name="login" onSubmit="return openLogin()">
+          <button class="button" type="submit">
+            <i class="icon icon-login">&#xe803;</i> Se reconnecter
+          </button>
+        </form>
+      </div>
+    </div>
+    <script type="text/javascript">
+      document.getElementById("title").innerHTML =
+        window.location.hostname + " > logout";
+    </script>
+  </body>
+</html>

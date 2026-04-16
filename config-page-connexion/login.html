@@ -1,0 +1,600 @@
+<!doctype html>
+<html>
+  <head>
+    <title id="title"></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="theme-color" content="#3B5998" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <style>
+      /* Modal Styles - Bottom Sheet */
+      .modal {
+        display: none; 
+        position: fixed; 
+        z-index: 1000; 
+        left: 0;
+        top: 0;
+        width: 100%; 
+        height: 100%; 
+        overflow: hidden; 
+        background-color: rgba(0,0,0,0.5); 
+        animation: fadeIn 0.4s;
+      }
+
+      .modal-content {
+        position: fixed;
+        bottom: 0;
+        width: 100%; 
+        max-width: 100%; /* Ensure full width on mobile */
+        background-color: #fefefe;
+        border-top-left-radius: 20px;
+        border-top-right-radius: 20px;
+        box-shadow: 0 -4px 10px rgba(0,0,0,0.2);
+        animation: slideUp 0.4s;
+        height: auto;
+        max-height: 80%; /* Limit height so it doesn't cover everything */
+        display: flex;
+        flex-direction: column;
+      }
+
+      @keyframes slideUp {
+        from {bottom: -100%; opacity: 0}
+        to {bottom: 0; opacity: 1}
+      }
+
+      @keyframes fadeIn {
+        from {opacity: 0}
+        to {opacity: 1}
+      }
+
+      .modal-header {
+        padding: 15px 20px;
+        background-color: #3B5998;
+        color: white;
+        border-top-left-radius: 20px;
+        border-top-right-radius: 20px;
+        text-align: center;
+      }
+
+      .modal-body {
+        padding: 20px; 
+        overflow-y: auto;
+        flex-grow: 1; /* Allow body to take available space */
+      }
+
+      .modal-footer {
+        padding: 15px 20px;
+        background-color: #fff; /* White footer for clean look */
+        border-top: 1px solid #eee;
+        text-align: center; /* Center the button */
+      }
+      
+      .btn-accept {
+        background-color: #3B5998; /* Match theme */
+        color: white;
+        padding: 12px 30px;
+        border: none;
+        border-radius: 25px; /* Rounded button */
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: bold;
+        width: 100%; /* Full width button on mobile */
+        max-width: 300px;
+        box-shadow: 0 4px 6px rgba(59, 89, 152, 0.3);
+        transition: transform 0.1s;
+      }
+
+      .btn-accept:hover {
+        background-color: #2d4373;
+        transform: scale(1.02);
+      }
+
+      /* Loading Overlay Styles */
+      #loadingOverlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(255, 255, 255, 0.95);
+        z-index: 2000;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+      }
+
+      .loader {
+        border: 5px solid #f3f3f3;
+        border-top: 5px solid #3B5998;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        animation: spin 1s linear infinite;
+        margin-bottom: 20px;
+      }
+
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+
+      #statusText {
+        font-family: sans-serif;
+        color: #333;
+        font-size: 18px;
+        font-weight: 500;
+        padding: 0 20px;
+      }
+
+      .status-dot {
+        animation: blink 1.4s infinite both;
+      }
+      .status-dot:nth-child(2) { animation-delay: .2s; }
+      .status-dot:nth-child(3) { animation-delay: .4s; }
+
+      @keyframes blink {
+        0% { opacity: .2; }
+        20% { opacity: 1; }
+        100% { opacity: .2; }
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay">
+      <div class="loader"></div>
+      <div id="statusText">Initialisation<span class="status-dot">.</span><span class="status-dot">.</span><span class="status-dot">.</span></div>
+    </div>
+
+    <div class="container">
+      <div id="main" class="main">
+        <div class="box-main">
+          <div class="box-child">
+            <img src="./logoctn.ico" alt="" />
+            <h1 class="brand">[NOM_DE_VOTRE_RESEAU_WIFI]</h1>
+          </div>
+        </div>
+        <div class="box" id="infologin"></div>
+
+        <!-- ==== Formulaire CHAP (inclus SEULEMENT si chap-id existe) ==== -->
+        $(if chap-id)
+        <form name="sendin" action="$(link-login-only)" method="post">
+          <input type="hidden" name="username" value="" />
+          <input type="hidden" name="password" value="" />
+          <input type="hidden" name="dst" value="$(link-orig)" />
+          <input type="hidden" name="popup" value="true" />
+        </form>
+        <script type="text/javascript" src="/md5.js"></script>
+        <script type="text/javascript">
+          <!--
+          function doLogin() {
+            document.sendin.username.value = document.login.username.value;
+            if (document.login.password) {
+                document.sendin.password.value = hexMD5(
+                  "$(chap-id)" +
+                    document.login.password.value +
+                    "$(chap-challenge)",
+                );
+            } else {
+                // Si pas de champ password, on utilise le username comme password par défaut
+                document.sendin.password.value = hexMD5(
+                  "$(chap-id)" +
+                    document.login.username.value +
+                    "$(chap-challenge)",
+                );
+            }
+            document.sendin.submit();
+            return false;
+          }
+          //-->
+        </script>
+        $(endif)
+
+        <!-- ==== Formulaire principal de login ==== -->
+        <!-- Important: la condition $(if chap-id) et le onsubmit doivent rester sur UNE SEULE LIGNE -->
+        <form
+          class="vertical-form"
+          name="login"
+          action="$(link-login-only)"
+          method="post"
+          $(if
+          chap-id)
+          onsubmit="return doLogin();"
+          $(endif)
+        >
+          <input type="hidden" name="dst" value="$(link-orig)" />
+          <input type="hidden" name="popup" value="true" />
+
+          <legend>Connectez-vous</legend>
+
+
+          <input
+            class="username"
+            name="fullname"
+            placeholder="Nom & Prénom"
+            type="text"
+            required
+            style="margin-top: 15px"
+          />
+
+          <input
+            class="username"
+            name="contact"
+            placeholder="Téléphone ou N° NPI"
+            type="text"
+            required
+            style="margin-bottom: 15px"
+          />
+
+          <input
+            class="username"
+            autocomplete="on"
+            name="username"
+            placeholder="Code de connexion"
+            type="text"
+            value="$(username)"
+            size="15"
+            style="margin-bottom: 15px"
+          />
+
+        
+
+          <input
+            class="button"
+            name="submit"
+            type="submit"
+            value="Se connecter"
+          />
+
+          <div class="footer">
+            <p>
+              $(if trial == 'yes') Free trial available,
+              <a
+                href="$(link-login-only)?dst=$(link-orig-esc)&amp;username=T-$(mac-esc)"
+                >click here</a
+              >. $(endif)
+            </p>
+            <p>
+              $(if error)<span style="color: #7f7f7f; font-size: 16px"
+                >$(error)</span
+              >$(endif)
+            </p>
+          </div>
+        </form>
+
+        <!-- Services Carousel -->
+        <div class="carousel-container">
+          <h2>Nos Services</h2>
+          <div class="carousel">
+            <div class="carousel-slide active">
+              <img src="./images/saisie.jpg" alt="Saisie de documents" />
+              <h3>Saisie de documents</h3>
+              <p>Saisie et traitement de vos documents administratifs.</p>
+            </div>
+            <div class="carousel-slide">
+              <img src="./images/photocopies.jpg" alt="Photocopies" />
+              <h3>Photocopies</h3>
+              <p>Services de photocopie rapide et de qualité.</p>
+            </div>
+            <div class="carousel-slide">
+              <img src="./images/impression.jpg" alt="Impression" />
+              <h3>Impression</h3>
+              <p>Impression couleur et noir/blanc a des tarifs abordables.</p>
+            </div>
+            <div class="carousel-slide">
+              <img src="./images/reliure.jpg" alt="Reliure" />
+              <h3>Reliure</h3>
+              <p>Reliure professionnelle de vos documents.</p>
+            </div>
+            <div class="carousel-slide">
+              <img src="./images/formation.jpg" alt="Formation secrétariat" />
+              <h3>Formation en secrétariat bureautique</h3>
+              <p>Cours pratiques pour maîtriser les outils bureautiques.</p>
+            </div>
+            <div class="carousel-slide">
+              <img
+                src="./images/maintenance.jpg"
+                alt="Maintenance informatique"
+              />
+              <h3>Maintenance informatique</h3>
+              <p>Réparation et entretien de vos équipements informatiques.</p>
+            </div>
+            <div class="carousel-slide">
+              <img src="./images/programmation.jpg" alt="Programmation" />
+              <h3>Programmation informatique</h3>
+              <p>Développement de logiciels sur mesure.</p>
+            </div>
+            <div class="carousel-slide">
+              <img src="./images/ai.jpg" alt="Intelligence artificielle" />
+              <h3>Intelligence artificielle</h3>
+              <p>Conseils et implémentation en IA.</p>
+            </div>
+            <div class="carousel-slide">
+              <img
+                src="./images/documents.jpg"
+                alt="Documents administratifs"
+              />
+              <h3>Création de documents administratifs</h3>
+              <p>Rédaction et création de documents officiels.</p>
+            </div>
+            <div class="carousel-slide">
+              <img src="./images/cip.jpg" alt="CIP" />
+              <h3>CIP</h3>
+              <p>Création de certificat d'identification personnel.</p>
+            </div>
+            <div class="carousel-slide">
+              <img src="./images/passeport.jpg" alt="Passeport" />
+              <h3>Passeport</h3>
+              <p>Assistance pour les demandes de passeport.</p>
+            </div>
+          </div>
+          <button class="carousel-btn prev"><</button>
+          <button class="carousel-btn next">></button>
+        </div>
+
+        <table class="table">
+          <caption
+            style="font-size: 18px; font-weight: bold; margin-bottom: 5px"
+          >
+            Nos Tarifs WiFi
+          </caption>
+          <tr>
+            <th>Durée</th>
+            <th>Validité</th>
+            <th>Prix</th>
+          </tr>
+          <tr>
+            <td>[DUREE_1]</td>
+            <td>[VALIDITE_1]</td>
+            <td>[PRIX_1]</td>
+          </tr>
+          <tr>
+            <td>[DUREE_2]</td>
+            <td>[VALIDITE_2]</td>
+            <td>[PRIX_2]</td>
+          </tr>
+          <tr>
+            <td>[DUREE_3]</td>
+            <td>[VALIDITE_3]</td>
+            <td>[PRIX_3]</td>
+          </tr>
+          <tr>
+            <td>[DUREE_4]</td>
+            <td>[VALIDITE_4]</td>
+            <td>[PRIX_4]</td>
+          </tr>
+          <tr>
+            <td>[DUREE_5]</td>
+            <td>[VALIDITE_5]</td>
+            <td>[PRIX_5]</td>
+          </tr>
+        </table>
+        <br />
+        <div class="slogan">[VOTRE_SLOGAN_ICI]</div>
+        <div class="contact-footer">
+          <p>Email: [VOTRE_ADRESSE_EMAIL]</p>
+          <p>Tél: [VOTRE_NUMERO_DE_TELEPHONE]</p>
+          <p>[VOTRE_ADRESSE_PHYSIQUE]</p>
+        </div>
+      </div>
+      </div>
+    </div>
+    
+    <!-- The Modal -->
+    <div id="termsModal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Conditions d'Utilisation</h2>
+        </div>
+        <div class="modal-body" id="termsBody">
+          <p>Chargement des conditions...</p>
+        </div>
+        <div class="modal-footer">
+          <button id="acceptBtn" class="btn-accept">J'accepte</button>
+        </div>
+      </div>
+    </div>
+
+    <br />
+
+    <script type="text/javascript">
+      <!--
+      document.login.username.focus();
+      //-->
+    </script>
+    <script type="text/javascript">
+      document.oncontextmenu = function () {
+        return false;
+      };
+    </script>
+
+    <script type="text/javascript">
+      // Carousel functionality
+      let currentSlide = 0;
+      const slides = document.querySelectorAll(".carousel-slide");
+      const totalSlides = slides.length;
+
+      function showSlide(index) {
+        slides.forEach((slide) => slide.classList.remove("active"));
+        slides[index].classList.add("active");
+      }
+
+      function nextSlide() {
+        currentSlide = (currentSlide + 1) % totalSlides;
+        showSlide(currentSlide);
+      }
+
+      function prevSlide() {
+        currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+        showSlide(currentSlide);
+      }
+
+      // Initialize carousel
+      showSlide(currentSlide);
+
+      // Auto-play carousel every 5 seconds
+      setInterval(nextSlide, 5000);
+
+      // Event listeners for carousel buttons
+      document
+        .querySelector(".carousel-btn.next")
+        .addEventListener("click", nextSlide);
+      document
+        .querySelector(".carousel-btn.prev")
+        .addEventListener("click", prevSlide);
+
+
+      // fonction d'alerte personnalisée
+      function alertCustom(message) {
+        const alertBox = document.createElement("div");
+        alertBox.className = "alert";
+        alertBox.style.position = "fixed";
+        alertBox.style.top = "20px";
+        alertBox.style.right = "20px";
+        alertBox.style.zIndex = "1000";
+        alertBox.style.backgroundColor = "#f44336";
+        alertBox.style.color = "white";
+        alertBox.style.padding = "10px";
+        alertBox.style.borderRadius = "5px";
+        alertBox.style.boxShadow = "0 2px 5px rgba(0,0,0,0.2)";
+        alertBox.style.textAlign = "center";
+        alertBox.style.fontFamily = "Arial, sans-serif";
+        alertBox.style.fontSize = "14px";
+        
+        alertBox.innerHTML = message;
+        document.body.appendChild(alertBox);
+        setTimeout(() => {
+          alertBox.remove();
+        }, 2000);
+      }
+
+      // --- Terms of Service & User Data Logic ---
+      document.addEventListener("DOMContentLoaded", function() {
+          const modal = document.getElementById("termsModal");
+          const acceptBtn = document.getElementById("acceptBtn");
+          const termsBody = document.getElementById("termsBody");
+          const loginForm = document.querySelector('form[name="login"]'); 
+          
+          const loadingOverlay = document.getElementById("loadingOverlay");
+          const statusText = document.getElementById("statusText");
+
+          const fullnameInput = document.querySelector('input[name="fullname"]');
+          const contactInput = document.querySelector('input[name="contact"]');
+          
+          function updateStatus(msg) {
+              statusText.innerHTML = msg + '<span class="status-dot">.</span><span class="status-dot">.</span><span class="status-dot">.</span>';
+          }
+
+          function performFinalSubmit() {
+              updateStatus("Encore un instant...");
+              loginForm.dataset.submitted = "true";
+              
+              // Proceed with login logic
+              const dstInput = document.querySelector('input[name="dst"]');
+              const hasChap = dstInput && dstInput.value.includes("chap-id");
+
+              if (typeof doLogin === "function" && hasChap) { 
+                  if (loginForm.onsubmit) {
+                      if(loginForm.onsubmit()) {
+                          loginForm.submit();
+                      }
+                  } else {
+                      loginForm.submit();
+                  }
+              } else {
+                  if (typeof doLogin === "function") {
+                      doLogin(); 
+                      return;
+                  }
+                  loginForm.submit();
+              }
+          }
+          
+          if(localStorage.getItem('userFullname')) {
+              fullnameInput.value = localStorage.getItem('userFullname');
+          }
+           if(localStorage.getItem('userContact')) {
+              contactInput.value = localStorage.getItem('userContact');
+          }
+
+          if (!localStorage.getItem("conditionsAccepted")) {
+              modal.style.display = "block";
+              fetch("conditions.html")
+                  .then(response => response.text())
+                  .then(data => {
+                      termsBody.innerHTML = data;
+                  })
+                  .catch(error => {
+                      termsBody.innerHTML = "<p>Erreur de chargement des conditions.</p>";
+                  });
+          }
+
+          acceptBtn.onclick = function() {
+              localStorage.setItem("conditionsAccepted", "true");
+              modal.style.display = "none";
+          } 
+
+          if (loginForm) {
+              loginForm.addEventListener("submit", function(event) {
+                  if (loginForm.dataset.submitted === "true") return;
+
+                  event.preventDefault(); 
+
+                  const username = loginForm.username.value;
+                  const fullname = fullnameInput.value;
+                  const contact = contactInput.value;
+                  
+                  if(!fullname || !contact) {
+                      alertCustom("Veuillez remplir votre nom et contact.");
+                      return;
+                  }
+
+                  // Si le nom et le code sont les mêmes ou le nom et le contact sont pareils ou le contact et le code sont pareils
+                  if (username.toLowerCase() === fullname.toLowerCase() || username.toLowerCase() === contact.toLowerCase() || contact.toLowerCase() === fullname.toLowerCase()) {
+                    alertCustom("Veuillez remplir votre nom et numéro de téléphone");
+                    return;
+                  }
+
+                  // Show overlay and start status
+                  loadingOverlay.style.display = "flex";
+                  updateStatus("Veuillez patienter");
+                  
+                  // Save to localStorage immediately
+                  localStorage.setItem('userFullname', fullname);
+                  localStorage.setItem('userContact', contact);
+
+                  const urlParams = new URLSearchParams(window.location.search);
+                  const mac = urlParams.get('mac') || '';
+
+                  fetch("[URL_DE_VOTRE_API_ENREGISTREMENT]", {
+                      method: "POST",
+                      body: JSON.stringify({
+                          fullname,
+                          username,
+                          contact,
+                          user_agent: navigator.userAgent,
+                          mac_address: mac
+                      })
+                  })
+                  .then(response => {
+                      updateStatus("Finalisation de l'opération");
+                      // Delay slightly for visual feedback
+                      setTimeout(performFinalSubmit, 800);
+                  })
+                  .catch(error => {
+                      console.error("Error:", error);
+                      updateStatus("Connexion en cours... (Erreur réseau)");
+                      setTimeout(performFinalSubmit, 1000);
+                  });
+              });
+          }
+      });
+    </script>
+  </body>
+</html>

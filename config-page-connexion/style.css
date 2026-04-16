@@ -1,0 +1,647 @@
+* {
+  box-sizing: border-box;
+}
+body {
+  font-family:
+    -apple-system, BlinkMacSystemFont, "segoe ui", Verdana, Roboto,
+    "helvetica neue", Arial, sans-serif, "apple color emoji";
+  font-size: 14px;
+  margin: 0;
+  background-color: #f3f4f5;
+}
+
+@font-face {
+  font-family: "fontello";
+  src: url("./font/fontello.eot?78273339");
+  src:
+    url("./font/fontello.eot?78273339#iefix") format("embedded-opentype"),
+    url("./font/fontello.woff?78273339") format("woff"),
+    url("./font/fontello.ttf?78273339") format("truetype"),
+    url("./font/fontello.svg?78273339#fontello") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+.icon {
+  font-family: "fontello";
+  font-style: normal;
+  font-weight: normal;
+  speak: none;
+  display: inline-block;
+  text-decoration: inherit;
+  width: 1em;
+  margin-right: 0.2em;
+  text-align: center;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1em;
+  margin-left: 0.2em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+iframe {
+  float: left;
+  height: 22px;
+  width: 100%;
+}
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+.main {
+  position: relative;
+  background: #ffffff;
+  color: #0f0f0f;
+  max-width: 300px;
+  height: fit-content;
+  border-radius: 5px;
+  padding: 10px;
+  margin-top: 0;
+  margin-left: auto;
+  margin-right: auto;
+  transition: 0.3s;
+  text-align: center;
+  min-height: 300px;
+  animation: fadein 1s;
+  -moz-animation: fadein 1s; /* Firefox */
+  -webkit-animation: fadein 1s; /* Safari and Chrome */
+  -o-animation: fadein 1s; /* Opera */
+}
+
+.box-child {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  background-color: #ffffff;
+  padding: 5px;
+  border-radius: 0 0 10px 10px;
+}
+.box-child img {
+  width: 60px;
+  height: 60px;
+}
+
+.brand {
+  color: #ffffff;
+  padding: 0px;
+  margin: 10px;
+  color: #007f7d;
+  font-size: 2rem;
+  text-decoration: underline;
+}
+
+.username {
+  background-color: #ffffff;
+  border: 2px solid #e1e5e9;
+  border-radius: 8px 8px 0 0;
+  border-bottom: 1px solid #e1e5e9;
+  text-align: center;
+  font-size: 16px;
+  color: #1a1a1a;
+  outline: none;
+  width: 100%;
+  height: 45px;
+  padding: 8px 12px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  font-weight: 500;
+  letter-spacing: 0.3px;
+}
+
+.username:focus {
+  border-color: #2196f3;
+  box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.1);
+  background-color: #fafbfc;
+}
+
+.password {
+  background-color: #ffffff;
+  border: 2px solid #e1e5e9;
+  border-radius: 0 0 8px 8px;
+  border-top: none;
+  text-align: center;
+  font-size: 16px;
+  color: #1a1a1a;
+  outline: none;
+  width: 100%;
+  height: 45px;
+  padding: 8px 12px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  margin-bottom: 8px;
+}
+
+.password:focus {
+  border-color: #2196f3;
+  box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.1);
+  background-color: #fafbfc;
+}
+
+/* ===== BOUTONS ===== */
+.button,
+.button2,
+.small-button {
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  text-align: center;
+  vertical-align: middle;
+  text-decoration: none;
+  display: inline-block;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  position: relative;
+  overflow: hidden;
+}
+input.code,
+input.username {
+  background-color: #ffffff;
+  border: 2px solid #e1e5e9;
+  border-radius: 8px;
+  border-bottom: 1px solid #e1e5e9;
+  text-align: center;
+  font-size: 16px;
+  color: #1a1a1a;
+  outline: none;
+  width: 100%;
+  height: 45px;
+  padding: 8px 12px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  margin-bottom: 10px;
+}
+
+.button {
+  background: linear-gradient(135deg, #2196f3 0%, #1976d2 100%);
+  color: #ffffff;
+  font-size: 16px;
+  margin: 12px 0;
+  width: 100%;
+  height: 48px;
+  box-shadow: 0 2px 8px rgba(33, 150, 243, 0.3);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  font-size: 14px;
+}
+
+.button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(33, 150, 243, 0.4);
+  background: linear-gradient(135deg, #1976d2 0%, #1565c0 100%);
+}
+
+.button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(33, 150, 243, 0.3);
+}
+
+.button2 {
+  background: linear-gradient(135deg, #f44336 0%, #d32f2f 100%);
+  color: #ffffff;
+  font-size: 16px;
+  margin: 12px 0;
+  width: 100%;
+  height: 48px;
+  box-shadow: 0 2px 8px rgba(244, 67, 54, 0.3);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  font-size: 14px;
+}
+
+.button2:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(244, 67, 54, 0.4);
+  background: linear-gradient(135deg, #d32f2f 0%, #c62828 100%);
+}
+
+.button2:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(244, 67, 54, 0.3);
+}
+
+.small-button {
+  background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%);
+  color: #1e40af;
+  height: 40px;
+  width: 32%;
+  min-width: 100px;
+  font-size: 13px;
+  font-weight: 600;
+  margin: 4px 1%;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e0e7ff;
+}
+
+.small-button:hover {
+  background: linear-gradient(135deg, #c7d2fe 0%, #a5b4fc 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  color: #1e3a8a;
+}
+
+.small-button:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* ===== MESSAGES ===== */
+.notice {
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin: 16px 0;
+  font-size: 14px;
+  color: #92400e;
+  border-left: 4px solid #f59e0b;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+/* ===== CAROUSEL ===== */
+.carousel-container {
+  margin: 20px 0;
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.carousel-container h2 {
+  text-align: center;
+  margin-bottom: 15px;
+  color: #333;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.carousel {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+  width: 100%;
+}
+
+.carousel-slide {
+  min-width: 100%;
+  display: none;
+  text-align: center;
+  padding: 20px;
+  background: #fff;
+}
+
+.carousel-slide.active {
+  display: block;
+}
+
+.carousel-slide img {
+  width: 100%;
+  max-width: 200px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 15px;
+}
+
+.carousel-slide h3 {
+  margin: 10px 0;
+  color: #2196f3;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.carousel-slide p {
+  color: #666;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(33, 150, 243, 0.8);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: bold;
+  transition: background 0.3s ease;
+  z-index: 10;
+}
+
+.carousel-btn:hover {
+  background: rgba(33, 150, 243, 1);
+}
+
+.carousel-btn.prev {
+  left: 10px;
+}
+
+.carousel-btn.next {
+  right: 10px;
+}
+
+/* ===== TABLES ===== */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #ffffff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin: 16px 0;
+}
+
+.table td,
+.table th {
+  padding: 12px 16px;
+  border-bottom: 1px solid #e5e7eb;
+  color: #374151;
+  text-align: left;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+}
+
+.table th {
+  background-color: #f9fafb;
+  font-weight: 600;
+  color: #111827;
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: 0.5px;
+}
+
+.table tr:hover td {
+  background-color: #f8fafc;
+}
+
+.table td a,
+.table th a {
+  color: #2196f3;
+  text-decoration: none;
+  transition: color 0.2s ease;
+  font-weight: 500;
+}
+
+.table td a:hover,
+.table th a:hover {
+  color: #1976d2;
+  text-decoration: underline;
+}
+
+.table2 {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #ffffff;
+  text-align: left;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin: 16px 0;
+}
+
+.table2 td,
+.table2 th {
+  padding: 12px 16px;
+  border: 1px solid #d1d5db;
+  color: #374151;
+  font-weight: 500;
+}
+
+.table2 th {
+  background-color: #f3f4f6;
+  font-weight: 600;
+  color: #111827;
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: 0.5px;
+}
+
+.table2 td a,
+.table2 th a {
+  color: #2196f3;
+  text-decoration: none;
+  transition: color 0.2s ease;
+  font-weight: 500;
+}
+
+.table2 td a:hover,
+.table2 th a:hover {
+  color: #1976d2;
+  text-decoration: underline;
+}
+
+/* ===== ANIMATIONS ===== */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInFromTop {
+  0% {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.main {
+  animation: fadeIn 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.box-main {
+  animation: slideInFromTop 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ===== RESPONSIVE ===== */
+@media screen and (max-width: 600px) {
+  .main {
+    width: 95%;
+    max-width: none;
+    margin-top: 0;
+    padding: 16px;
+    border-radius: 12px;
+  }
+
+  .small-button {
+    width: 48%;
+    margin: 6px 1%;
+    font-size: 12px;
+  }
+
+  .table td,
+  .table th,
+  .table2 td,
+  .table2 th {
+    padding: 8px 12px;
+    font-size: 13px;
+  }
+
+  .username,
+  .password {
+    height: 42px;
+    font-size: 15px;
+  }
+
+  .button,
+  .button2 {
+    height: 44px;
+    font-size: 13px;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .main {
+    margin-top: 0;
+    max-width: 400px;
+    border-radius: 16px;
+  }
+
+  .small-button {
+    width: auto;
+    min-width: 120px;
+    padding: 0 20px;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .main {
+    max-width: 480px;
+    margin-top: 0;
+    padding: 24px;
+  }
+
+  .username,
+  .password {
+    height: 48px;
+    font-size: 16px;
+  }
+
+  .button,
+  .button2 {
+    height: 50px;
+    font-size: 15px;
+  }
+}
+
+@media (prefers-contrast: high) {
+  .button,
+  .button2,
+  .small-button {
+    border: 2px solid currentColor;
+  }
+
+  .table td,
+  .table th,
+  .table2 td,
+  .table2 th {
+    border-width: 2px;
+  }
+
+  .username,
+  .password {
+    border-width: 3px;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .main,
+  .box-main {
+    animation: none;
+  }
+}
+
+.username:focus-visible,
+.password:focus-visible,
+.button:focus-visible,
+.button2:focus-visible,
+.small-button:focus-visible {
+  outline: 2px solid #2196f3;
+  outline-offset: 2px;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #2196f3;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #1976d2;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #f5f5f5;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-track:hover {
+  background-color: #e0e0e0;
+}
+
+::-webkit-scrollbar-corner {
+  background-color: #f5f5f5;
+}
+
+::-webkit-scrollbar-button {
+  display: none;
+}
+
+::-webkit-scrollbar-button:start:decrement,
+::-webkit-scrollbar-button:end:increment {
+  display: block;
+}
+/* ===== CONTACT FOOTER ===== */
+.slogan {
+  margin-top: 20px;
+  padding: 7px 10px;
+  text-align: center;
+  font-size: 24px;
+  color: #214fe8;
+  font-weight: 500;
+  line-height: 1.4;
+}
+.contact-footer {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 14px;
+  color: #92400e;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.contact-footer p {
+  font-size: small;
+  line-height: 1px;
+}

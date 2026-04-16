@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title id="title"></title>
+$(if refresh-timeout)
+<meta http-equiv="refresh" content="$(refresh-timeout-secs)">
+$(endif)
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="theme-color" content="#3B5998" />
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0;"/>
+<link rel="stylesheet" href="style.css">
+<script language="JavaScript">
+    $(if advert-pending == 'yes')
+    var popup = '';
+    function focusAdvert() {
+        if (window.focus) popup.focus();
+    }
+    function openAdvert() {
+        popup = open('$(link-advert)', 'hotspot_advert', '');
+        setTimeout("focusAdvert()", 1000);
+    }
+    $(endif)
+    function openLogout() {
+        if (window.name != 'hotspot_status') return true;
+        open('$(link-logout)', 'hotspot_logout', 'toolbar=0,location=0,directories=0,status=0,menubars=0,resizable=1,width=280,height=250');
+        window.close();
+        return false;
+    }
+</script>
+</head>
+<body $(if advert-pending == 'yes') onLoad="openAdvert()" $(endif)>
+<div class="container">
+<div id="main" class="main">
+    <div class="box-main">
+        <div class="box-child">
+          <img src="./logoctn.ico" alt="" />
+          <h1 class="brand">[NOM_DE_VOTRE_RESEAU_WIFI]</h1>
+        </div>
+    </div>
+<form action="$(link-logout)" name="logout" onSubmit="return openLogout()">
+
+$(if login-by == 'trial')
+    <div style="margin-top:20px; text-align: center;">
+        <h3>Bienvenue</h3>
+        <i style="font-size:50px;" class="icon icon-user-circle-o">&#xf2be;</i>
+        <h3>utilisateur d'essai</h3>
+    </div><br>
+$(elif login-by != 'mac')
+    <div style="margin-top:20px; text-align: center;">
+        <h3>Bienvenue</h3>
+        <i style="font-size:50px;" class="icon icon-user-circle-o">&#xf2be;</i>
+        <h3 id="user" class="js-username">$(username)</h3>
+    </div><br>
+$(endif)
+
+<table class="table2">
+    <tr><td align="right" style="width: 40%;">Adresse IP <i class="icon icon-sitemap">&#xf0e8;</i></td><td class="js-ip">$(ip)</td></tr>
+    <tr><td align="right">Adresse MAC <i class="icon icon-barcode">&#xe80a;</i></td><td class="js-mac">$(mac)</td></tr>
+    <tr><td align="right">Telechargement (Montant) <i class="icon icon-upload">&#xe808;</i></td><td>$(bytes-in-nice)</td></tr>
+    <tr><td align="right">Telechargement (Descendant) <i class="icon icon-download">&#xe809;</i></td><td>$(bytes-out-nice)</td></tr>
+    <tr><td align="right">Connecte <i class="icon icon-exchange">&#xf0ec;</i></td><td>$(uptime)</td></tr>
+    $(if remain-bytes-total)
+    <tr><td align="right">Quota restant <i class="icon icon-hourglass-2">&#xf252;</i></td><td>$(remain-bytes-total-nice)</td></tr>
+    $(endif)
+    $(if session-time-left)
+    <tr><td align="right">Temps restant <i class="icon icon-clock">&#xe805;</i></td><td>$(session-time-left)</td></tr>
+    $(endif)
+    $(if blocked == 'yes')
+    <tr><td align="right">Statut <i class="icon icon-check">&#xe807;</i></td><td><div style="color: #FF8080"><a href="$(link-advert)" target="hotspot_advert">publicite</a> requise</div></td></tr>
+    $(elif refresh-timeout)
+    <tr><td align="right">Actualiser <i class="icon icon-arrows-cw">&#xe800;</i></td><td>$(refresh-timeout)</td></tr>
+    $(endif)
+    <tr><td align="right">Expire <i class="icon icon-calendar">&#xe806;</i></td><td style="padding-top:0px; padding-left:2px;"><iframe id="exp" frameborder="0" scrolling="no" src="about:blank"></iframe></td></tr>
+</table>
+
+$(if login-by-mac != 'yes')
+<br>
+<button class="button2" type="submit"><i class="icon icon-logout">&#xe804;</i> Se deconnecter</button>
+$(endif)
+</form>
+</div>
+</div>
+
+<script type="text/javascript">
+    document.getElementById('title').innerHTML = window.location.hostname + " > status";
+
+    var usr = document.getElementById('user').innerHTML;
+    var url = "https://example.com/status/status.php?name=";
+    var SessionName = "wifijoss";
+    var getvalid = url + usr + "&session=" + SessionName;
+    document.getElementById('exp').src = getvalid;
+</script>
+
+<script type="text/javascript">
+    // Attendre que le DOM soit complètement chargé et les variables MikroTik injectées
+    window.addEventListener('DOMContentLoaded', function() {
+        setTimeout(function() {
+            var macEl      = document.querySelector('.js-mac');
+            var ipEl       = document.querySelector('.js-ip');
+            var usernameEl = document.querySelector('.js-username');
+
+            var macAddress = macEl      ? macEl.textContent.trim()      : null;
+            var ipAddress  = ipEl       ? ipEl.textContent.trim()       : null;
+            var username   = usernameEl ? usernameEl.textContent.trim() : null;
+
+            // Vérifier que les données sont bien présentes avant d'envoyer
+            if (!macAddress || !username || macAddress === '' || username === '') {
+                console.warn('Données manquantes, envoi annulé.');
+                return;
+            }
+
+            // Bloquer le refresh le temps de l'envoi
+            var metaRefresh = document.querySelector('meta[http-equiv="refresh"]');
+            var refreshContent = null;
+            if (metaRefresh) {
+                refreshContent = metaRefresh.getAttribute('content');
+                metaRefresh.removeAttribute('content');
+            }
+
+            fetch("[URL_DE_VOTRE_API_MAJ_MAC]", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    mac_address: macAddress,
+                    ip_address:  ipAddress,
+                    username:    username
+                })
+            })
+            .then(function(response) { return response.json(); })
+            .then(function(data) {
+                console.log('MAC mise à jour :', data);
+            })
+            .catch(function(err) {
+                console.warn('Erreur envoi MAC :', err);
+            })
+            .finally(function() {
+                // Remettre le refresh après l'envoi
+                if (metaRefresh && refreshContent) {
+                    metaRefresh.setAttribute('content', refreshContent);
+                }
+            });
+
+        }, 1500); // 1.5s pour laisser le temps à MikroTik d'injecter les variables
+    });
+</script>
+</body>
+</html>
